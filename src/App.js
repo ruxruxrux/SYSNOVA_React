@@ -17,6 +17,7 @@ function App() {
         >
           Learn React
         </a>
+        kgy_react_sample
       </header>
     </div>
   );
