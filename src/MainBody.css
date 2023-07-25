@@ -1,0 +1,30 @@
+.main-container{
+    position: relative;
+    text-align: center;
+    margin-top: 10%;
+}
+
+.textG1{
+    font-size: 100px;
+    color: cornflowerblue;
+}
+.textO1{
+    font-size: 100px;
+    color: red;
+}
+.textO2{
+    font-size: 100px;
+    color:gold;
+}
+.textG2{
+    font-size: 100px;
+    color: cornflowerblue;
+}
+.textL1{
+    font-size: 100px;
+    color:seagreen;
+}
+.textE1{
+    font-size: 100px;
+    color: red;
+}
