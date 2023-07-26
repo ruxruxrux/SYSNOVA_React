@@ -1,9 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
+import './Header.css';
 import Circle from './Circle';
 
 
-function App() {
+function Header() {
   return (
     <div className='head-container'>
       <div className='textBox1'>
@@ -23,4 +22,4 @@ function App() {
   );
 }
 
-export default App;
+export default Header;

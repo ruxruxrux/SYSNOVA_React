@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import MainBody from './MainBody.js'
+import Header from './Header';
+import MainBody from './MainBody'
 import InputBody from './InputBody';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Header />
     <MainBody/>
     <InputBody/>
   </React.StrictMode>
