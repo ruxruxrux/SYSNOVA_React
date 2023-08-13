@@ -1,0 +1,14 @@
+.table-container{
+    display: flex;
+}
+div table{
+    margin-left: 1rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+th,tr,td{
+    height: 4rem;
+    text-align: center;
+    border: 2px solid rgb(209 213 219);
+}
