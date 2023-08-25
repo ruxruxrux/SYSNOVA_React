@@ -1,6 +1,7 @@
 import React,{ useState } from 'react';
 import { Col, Row } from 'antd';
 import { Select, Space, Input,Button } from 'antd';
+
 const ModalContext = ()=>{
     return(
         <div>
@@ -9,12 +10,12 @@ const ModalContext = ()=>{
             <p className='mt-4 text-xl'>고객사 정보</p>
 
             <Row className='mt-4  border-gray-300 border-2'>
-                <Col span={3} className=' bg-violet-50 h-16 flex items-center justify-center border-r-2 border-gray-300'>
+                <Col span={3} className=' bg-violet-50 h-16 flex items-center justify-center border-r-2 border-gray-300 flex-wrap'>
                     <span className='font-bold'>Industry / Type</span> &nbsp; <span className='font-light text-red-600'>*</span>
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center border-r-2 border-gray-300'>
                     <Space wrap className='mr-2'> 
-                        <Select className='w-48' defaultValue="1" 
+                        <Select className='xl:w-48 xs:w-1' defaultValue="1" 
                             options={[
                                 {
                                 value: '1',
@@ -31,8 +32,8 @@ const ModalContext = ()=>{
                             ]}/>
                     </Space>
 
-                    <Space wrap className='ml-2'> 
-                        <Select className='w-48' defaultValue="1" 
+                    <Space  wrap className='ml-2'> 
+                        <Select className='xl:w-48 xs:w-1' defaultValue="1" 
                             options={[
                                 {
                                 value: '1',
@@ -49,12 +50,12 @@ const ModalContext = ()=>{
                             ]}/>
                     </Space>
                 </Col>
-                <Col span={3} className=' bg-violet-50 h-16 flex items-center justify-center border-r-2 border-gray-300'>
-                    <span className='font-bold'>Division_SP</span> &nbsp; <span className='font-light text-red-600'>*</span>
+                <Col span={3} className=' bg-violet-50 h-16 flex items-center justify-center border-r-2 border-gray-300 overflow-wrap-break-word'>
+                    <span className='font-bold '>Division _SP</span> &nbsp; <span className='font-light text-red-600'>*</span>
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center'>
                     <Space wrap > 
-                        <Select className='w-96' defaultValue="1" 
+                        <Select className='xs:w-20 sm:w-48 xl:w-96' defaultValue="1" 
                             options={[
                                 {
                                 value: '1',
@@ -119,7 +120,7 @@ const ModalContext = ()=>{
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center border-r-2 border-gray-300'>
                     <Space wrap > 
-                        <Select className='w-96' defaultValue="1" 
+                        <Select className='xs:w-20 sm:w-48 xl:w-96' defaultValue="1" 
                             options={[
                                 {
                                 value: '1',
@@ -187,7 +188,7 @@ const ModalContext = ()=>{
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center'>
                     <Space wrap className='mr-2'> 
-                        <Select className='w-48' defaultValue="1" 
+                        <Select className='sm:w-16 md:w-32 xl:w-48' defaultValue="1" 
                             options={[
                                 {
                                 value: '1',
@@ -204,7 +205,7 @@ const ModalContext = ()=>{
                             ]}/>
                     </Space>
                     <Space wrap className='ml-2'> 
-                        <Select className='w-48' defaultValue="1" 
+                        <Select className='sm:w-16 md:w-32 xl:w-48' defaultValue="1" 
                             options={[
                                 {
                                 value: '1',
@@ -229,7 +230,7 @@ const ModalContext = ()=>{
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center border-r-2 border-gray-300'>
                     <Space wrap > 
-                        <Select className='w-96' defaultValue="1" 
+                        <Select className='xs:w-20 sm:w-48 xl:w-96' defaultValue="1" 
                             options={[
                                 {
                                 value: '1',
@@ -251,7 +252,7 @@ const ModalContext = ()=>{
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center'>
                     <Space wrap > 
-                        <Select className='w-96' defaultValue="1" 
+                        <Select className='xs:w-20 sm:w-48 xl:w-96' defaultValue="1" 
                             options={[
                                 {
                                 value: '1',

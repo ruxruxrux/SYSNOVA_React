@@ -1,0 +1,16 @@
+#cancelBtn:hover{
+    background-color: white;
+    color: rgb(107, 114, 128);
+    border: 1px solid rgb(107, 114, 128);
+}
+#deleteBtn:hover{
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+}
+
+#updateBtn:hover,#insertBtn:hover,#selectBtn:hover{
+    background-color: white;
+    color: rgb(99, 102, 241);
+    border: 1px solid rgb(99, 102, 241);
+}

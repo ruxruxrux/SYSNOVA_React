@@ -11,9 +11,9 @@ const Top = ()=>{
             <span className='font-bold'>검색어</span>
         </Col>
 
-        <Col className= 'h-16 flex items-center justify-center '>
+        <Col span={21} className= 'h-16 flex items-center justify-start '>
             <Space wrap className='ml-4'>
-                <Select className='w-48' defaultValue="1"
+                <Select className='xs:w-20 sm:w-48' defaultValue="1"
                 options={[
                     {
                     value: '1',
@@ -49,7 +49,7 @@ const Top = ()=>{
         </Col>
         <Col span={9} className='h-16  flex items-center justify-center  border-gray-300'>
             <Space wrap > 
-                <Select className='w-96' defaultValue="1" 
+                <Select className='xs:w-20 sm:w-48 xl:w-96' defaultValue="1" 
                 options={[
                     {
                     value: '1',
@@ -74,7 +74,7 @@ const Top = ()=>{
         </Col>
         <Col span={9} className='h-16 flex items-center justify-center border-r-2 border-gray-300'>
             <Space wrap > 
-                <Select className='w-96' defaultValue="1"
+                <Select className='xs:w-20 sm:w-48 xl:w-96' defaultValue="1"
                 options={[
                     {
                     value: '1',
