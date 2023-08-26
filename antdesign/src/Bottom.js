@@ -1,7 +1,6 @@
 import React,{ useState } from 'react';
 import { Button, Modal, Table } from 'antd';
 import ModalContext from './ModalContext';
-import './Bottom.css'
 
 const columns = [
     { title: 'No', dataIndex: 'no', key: 'no',align: 'center', style: { fontWeight: 'bold' }},
@@ -24,20 +23,20 @@ const dataSource = [
 
 
 const Bottom = () => {
+    const [modalState, setModalState] = useState(false);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const showModal = () => {
-        setIsModalOpen(true);
-    };
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
+        setModalState(true);
+    }
+
+    const closeModal = () => {
+        setModalState(false);
+    }
 
 
+
+    
     return (
         <div>
             <Button className='ml-4 rounded-full border-gray-500 text-gray-500'>엑셀 다운로드</Button>
@@ -48,19 +47,9 @@ const Bottom = () => {
                 
             </Table>
 
-            <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={1500} footer={null}>
-                <div className="text-2xl font-semibold">영업 기회 등록</div>
-                <ModalContext/>
-                <div className="mt-4 flex justify-end">
-                    <Button onClick={handleCancel} id='cancelBtn' className='ml-4 rounded-full bg-gray-500 text-white border-gray-500'>닫기</Button>
-                    <Button onClick={handleOk} id='deleteBtn' className='ml-2 rounded-full bg-red-500 text-white' >삭제</Button>
-                    <Button onClick={handleOk} id='updateBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>수정 저장</Button>
-                    <Button onClick={handleOk} id='insertBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>신규 저장</Button>
-                    <Button onClick={handleOk} id='selectBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>내용 호출</Button>
-                </div>
+            <Modal open={modalState}  onCancel={closeModal} width={1500} footer={null}>
+                <ModalContext parentFunction={closeModal}/>
             </Modal>
-
-
             
         </div>
     );

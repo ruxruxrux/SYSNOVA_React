@@ -1,10 +1,153 @@
-import React,{ useState } from 'react';
+import {React, useState} from 'react';
 import { Col, Row } from 'antd';
 import { Select, Space, Input,Button } from 'antd';
+import './Bottom.css';
+import axios from 'axios';
 
-const ModalContext = ()=>{
+const ModalContext = ({ parentFunction })=>{    
+    const [category, setCategory] = useState('');
+    const [content, setContent] = useState('');
+    
+    const closeModal = () => {
+        setCategory('');
+        setContent('');
+        parentFunction();
+    }
+
+    const changeCategory = (event) => {
+        setCategory(event.target.value);
+    }
+    
+    const changeContent = (event) => {
+        setContent(event.target.value);
+    }
+
+    // ID 존재 여부
+    const requsetInfo =(id) => {
+
+        if (id != null && id != ''){
+            return  axios({
+                method:'GET',
+                url:'https://ems-dev-api.sysnova.kr/api/edu/get',
+                params:{
+                    userId:id
+                }
+            })
+            .then(response => {
+                return response.data.data[0];
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+    }
+
+    //삭제
+    const deleteInfo = async () => {
+        const id = prompt('삭제할 ID를 입력하세요.');
+
+        const info = await requsetInfo(id); // ID 존재 여부
+
+        if (info == undefined){ 
+            alert('존재하지 않는 ID 입니다.');
+        }else {
+            axios({
+                method:'DELETE',
+                url:'https://ems-dev-api.sysnova.kr/api/edu/delete',
+                params:{
+                    userId:id
+                }
+            })
+            .then(response => {
+                alert('삭제되었습니다.');
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+
+    }
+
+    //수정
+    const updateInfo = async () => {
+        
+        const id = prompt('수정할 ID를 입력하세요.');
+
+        const info = await requsetInfo(id); // ID 존재 여부
+
+        if (info == undefined){ 
+            alert('존재하지 않는 ID 입니다.');
+        }else{
+            axios({
+                method:'PUT',
+                url:'https://ems-dev-api.sysnova.kr/api/edu/put',
+                params:{
+                    userId:id,
+                    category:category,
+                    content:content
+                }
+            })
+            .then(response => {
+                alert('수정되었습니다.');
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+        
+    }
+
+    //등록
+    const insertInfo = async () => {
+        if (category == '' || content == ''){
+            alert('값을 입력하세요.');
+        }else {
+            const id = prompt('등록할 ID를 입력하세요.');
+
+            const info = await requsetInfo(id); // ID 존재 여부
+
+            if (info == undefined){
+                axios({
+                    method:'POST',
+                    url:'https://ems-dev-api.sysnova.kr/api/edu/post',
+                    params:{
+                        userId:id,
+                        category:category,
+                        content:content
+                    }
+                })
+                .then(response => {
+                    alert('등록되었습니다.');
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+            }else{
+                alert('이미 존재하는 ID 입니다.');
+            } 
+        }
+    }
+    
+    //조회
+    const selectInfo = async () => {
+
+        const id = prompt('조회할 ID를 입력하세요.');
+        
+        const info = await requsetInfo(id);
+
+        if (info == undefined){
+            alert('존재하지 않는 ID 입니다.');
+        }else{
+            setCategory(info.category);
+            setContent(info.content);
+        }
+        
+    }
+    
+
     return(
         <div>
+            <div className="text-2xl font-semibold">영업 기회 등록</div>
             <br/><hr/>
 
             <p className='mt-4 text-xl'>고객사 정보</p>
@@ -85,7 +228,7 @@ const ModalContext = ()=>{
                     <span className='font-bold'>Sold To Name</span>
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center'>
-                    <Input placeholder="Sold To Name을 입력하세요." className='w-96' />
+                    <Input id='category' placeholder="Sold To Name을 입력하세요." className='w-96' value={category} onChange={changeCategory} />
                 </Col>
             </Row>
 
@@ -100,7 +243,7 @@ const ModalContext = ()=>{
                     <span className='font-bold'>Bill To Name</span>
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center'>
-                    <Input placeholder="Bill To Name을 입력하세요." className='w-96' />
+                    <Input id='content' placeholder="Bill To Name을 입력하세요." className='w-96' value={content} onChange={changeContent}/>
                 </Col>
             </Row>
 
@@ -270,6 +413,15 @@ const ModalContext = ()=>{
                     </Space>
                 </Col>
             </Row>
+
+            <div className="mt-4 flex justify-end">
+                <Button  onClick={closeModal} id='cancelBtn' className='ml-4 rounded-full bg-gray-500 text-white border-gray-500'>닫기</Button>
+                <Button  onClick={deleteInfo} id='deleteBtn' className='ml-2 rounded-full bg-red-500 text-white' >삭제</Button>
+                <Button  onClick={updateInfo} id='updateBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>수정 저장</Button>
+                <Button  onClick={insertInfo} id='insertBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>신규 저장</Button>
+                <Button  onClick={selectInfo} id='selectBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>내용 호출</Button>
+            </div>
+            
         </div>
     )
 };
