@@ -3,11 +3,17 @@ import { Col, Row } from 'antd';
 import { Select, Space, Input,Button } from 'antd';
 import './Bottom.css';
 import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { contentStore } from './store';
 
 const ModalContext = ({ parentFunction })=>{    
     const [category, setCategory] = useState('');
     const [content, setContent] = useState('');
-    
+
+    const [clientName, setClientName] = useState(''); //clientName 상태 관리
+    const [shipToName, setShipToName] = useState(''); //shipToName 상태 관리
+    const [context, setContext] = useRecoilState(contentStore); //contentStore 값 관리
+
     const closeModal = () => {
         setCategory('');
         setContent('');
@@ -21,6 +27,21 @@ const ModalContext = ({ parentFunction })=>{
     const changeContent = (event) => {
         setContent(event.target.value);
     }
+
+    const changeClientName = (event) => { //client Name
+        setClientName(event.target.value);
+    }
+
+    const changeShipToName = (event) => { //ship To Name
+        setShipToName(event.target.value);
+    }
+
+    const updateContentStore = () => { // client Name, ship To Name 수정 버튼 클릭 시
+        setContext({
+            clientName : clientName,
+            shipToName : shipToName
+        })
+    };
 
     // ID 존재 여부
     const requsetInfo =(id) => {
@@ -222,7 +243,7 @@ const ModalContext = ({ parentFunction })=>{
                     <span className='font-bold'>Client Name</span> &nbsp; <span className='font-light text-red-600'>*</span>
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center border-r-2 border-gray-300'>
-                    <Input placeholder="Client Name을 입력하세요." className='w-96' />
+                    <Input placeholder="Client Name을 입력하세요." className='w-96' value={clientName} onChange={changeClientName}/>
                 </Col>
                 <Col span={3} className=' bg-violet-50 h-16 flex items-center justify-center border-r-2 border-gray-300'>
                     <span className='font-bold'>Sold To Name</span>
@@ -237,7 +258,7 @@ const ModalContext = ({ parentFunction })=>{
                     <span className='font-bold'>Ship To Name</span>
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center border-r-2 border-gray-300'>
-                    <Input placeholder="Ship To Name을 입력하세요." className='w-96' />
+                    <Input placeholder="Ship To Name을 입력하세요." className='w-96' value={shipToName} onChange={changeShipToName}/>
                 </Col>
                 <Col span={3} className=' bg-violet-50 h-16 flex items-center justify-center border-r-2 border-gray-300'>
                     <span className='font-bold'>Bill To Name</span>
@@ -420,6 +441,7 @@ const ModalContext = ({ parentFunction })=>{
                 <Button  onClick={updateInfo} id='updateBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>수정 저장</Button>
                 <Button  onClick={insertInfo} id='insertBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>신규 저장</Button>
                 <Button  onClick={selectInfo} id='selectBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>내용 호출</Button>
+                <Button  onClick={updateContentStore} id='selectBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>Recoil 저장</Button>
             </div>
             
         </div>

@@ -3,8 +3,15 @@ import './Middle.css'
 import { InfoCircleTwoTone } from '@ant-design/icons';
 import { Progress } from 'antd';
 import { Col, Row } from 'antd';
+
+import { useRecoilState } from 'recoil';
+import { contentStore } from './store';
+
 const Middle = () => {
-  return (
+    
+    const [context, setContext] = useRecoilState(contentStore); //contentStore 의 값 가져오기
+
+    return (
     <Row className='m-4'>
         <Col span={14} className='h-48 flex items-center' style={{ overflowX: 'auto' }}>
             <table className='fixed-layout-table m-0'>
@@ -32,7 +39,8 @@ const Middle = () => {
                     </th>
                     <th>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <div>Billing<br />미완료</div>
+                            {/*<div>Billing<br />미완료</div>*/}
+                            <div>Client Name</div>
                             <div style={{ marginLeft: '4px' }}>
                                 <InfoCircleTwoTone />
                             </div>
@@ -40,7 +48,8 @@ const Middle = () => {
                     </th>
                     <th>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <div>Billing<br />완료</div>
+                            {/*<div>Billing<br />완료</div>*/}
+                            <div>Ship To Name</div>
                             <div style={{ marginLeft: '4px' }}>
                                 <InfoCircleTwoTone />
                             </div>
@@ -51,8 +60,8 @@ const Middle = () => {
                     <td>94</td>
                     <td>86</td>
                     <td>6</td>
-                    <td>2</td>
-                    <td>0</td>
+                    <td>{context.clientName}</td>
+                    <td>{context.shipToName}</td>
                         
                 </tr>
             </table>
