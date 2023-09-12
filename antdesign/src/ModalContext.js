@@ -6,6 +6,8 @@ import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { contentStore } from './store';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 const ModalContext = ({ parentFunction })=>{    
     const [category, setCategory] = useState('');
     const [content, setContent] = useState('');
@@ -41,6 +43,7 @@ const ModalContext = ({ parentFunction })=>{
             clientName : clientName,
             shipToName : shipToName
         })
+        alert("저장되었습니다.");
     };
 
     // ID 존재 여부
@@ -168,7 +171,17 @@ const ModalContext = ({ parentFunction })=>{
 
     return(
         <div>
-            <div className="text-2xl font-semibold">영업 기회 등록</div>
+            <div className="text-2xl font-semibold flex items-center">
+                <FontAwesomeIcon icon={["fas", "fa-circle-user"]} /> &nbsp;
+                영업 기회 등록
+                <div className="flex-grow text-right mr-5">
+                    <FontAwesomeIcon icon="fa-solid fa-1" className='text-purple-400'/> <span className='text-base mr-5 text-purple-400 '>고객사</span>
+                    <FontAwesomeIcon icon="fa-solid fa-2"/> <span className='text-base mr-5'>검색 태그</span>
+                    <FontAwesomeIcon icon="fa-solid fa-3"/> <span className='text-base mr-5'>담당자</span>
+                    <FontAwesomeIcon icon="fa-solid fa-4"/> <span className='text-base mr-5' >조회 권한</span>
+                </div>
+            </div>
+
             <br/><hr/>
 
             <p className='mt-4 text-xl'>고객사 정보</p>

@@ -6,7 +6,6 @@ const Top = ()=>{
     return(
     <>
     <Row className='mt-4 ml-4 mr-4 border-gray-300 border-2'>
-
         <Col span={3} className=' bg-violet-50 h-16 flex items-center justify-center border-r-2 border-gray-300'>
             <span className='font-bold'>검색어</span>
         </Col>
