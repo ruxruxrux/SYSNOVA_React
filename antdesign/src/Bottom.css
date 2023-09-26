@@ -9,7 +9,13 @@
     border: 1px solid red;
 }
 
-#updateBtn:hover,#insertBtn:hover,#selectBtn:hover{
+#validateOkBtn{
+    background-color: rgb(99, 102, 241);
+    color: white;
+    border: 1px solid rgb(99, 102, 241);
+}
+
+#updateBtn:hover,#insertBtn:hover,#selectBtn:hover,#validateOkBtn:hover{
     background-color: white;
     color: rgb(99, 102, 241);
     border: 1px solid rgb(99, 102, 241);

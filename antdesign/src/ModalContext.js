@@ -1,20 +1,72 @@
 import {React, useState} from 'react';
 import { Col, Row } from 'antd';
-import { Select, Space, Input,Button } from 'antd';
-import './Bottom.css';
-import axios from 'axios';
+import { Select, Space, Input,Button,Modal } from 'antd';
 import { useRecoilState } from 'recoil';
 import { contentStore } from './store';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Joi from 'joi';
 
-const ModalContext = ({ parentFunction })=>{    
+import './Bottom.css';
+import axios from 'axios';
+
+const ModalContext = ({ parentFunction })=>{
+
+    // 아래의 4가지 값에 대한 유효성 검사
     const [category, setCategory] = useState('');
     const [content, setContent] = useState('');
-
     const [clientName, setClientName] = useState(''); //clientName 상태 관리
     const [shipToName, setShipToName] = useState(''); //shipToName 상태 관리
+
     const [context, setContext] = useRecoilState(contentStore); //contentStore 값 관리
+
+    const inputValidator = Joi.object({
+        clientName: Joi.string()
+            .min(2)
+            .max(20)
+            .pattern(new RegExp(/^[a-z|A-Z|가-힣]+$/))
+            .required()
+            .messages({
+                'string.empty':'clientName이 비어서는 안됩니다',
+                'string.min':'clientName이 너무 짧습니다',
+                'string.max':'clientName이 너무 깁니다',
+                'string.pattern.base':'clientName은 영문자 또는 한글만 가능합니다'
+            }),
+        category: Joi.string()
+            .min(2)
+            .max(10)
+            .pattern(new RegExp(/^[a-z|A-Z|0-9|가-힣]+$/))
+            .required()
+            .messages({
+                'string.empty':'category가 비어서는 안됩니다',
+                'string.min':'category가 너무 짧습니다',
+                'string.max':'category가 너무 깁니다',
+                'string.pattern.base':'category는 영문자, 숫자, 한글만 가능합니다'
+            }),
+        shipToName: Joi.string()
+            .min(2)
+            .max(20)
+            .pattern(new RegExp(/^[a-z|A-Z|0-9|가-힣]+$/))
+            .required()
+            .messages({
+                'string.empty':'shipToName이 비어서는 안됩니다',
+                'string.min':'shipToName이 너무 짧습니다',
+                'string.max':'shipToName이 너무 깁니다',
+                'string.pattern.base':'shipToName은 영문자, 숫자, 한글만 가능합니다'
+            }),
+        content: Joi.string()
+            .min(2)
+            .max(10)
+            .pattern(new RegExp(/^[a-z|A-Z|0-9|가-힣]+$/))
+            .required()
+            .messages({
+                'string.empty':'content가 비어서는 안됩니다',
+                'string.min':'content가 너무 짧습니다',
+                'string.max':'content가 너무 깁니다',
+                'string.pattern.base':'content는 영문자, 숫자, 한글만 가능합니다'
+            }),
+        
+    });
 
     const closeModal = () => {
         setCategory('');
@@ -45,6 +97,33 @@ const ModalContext = ({ parentFunction })=>{
         })
         alert("저장되었습니다.");
     };
+
+    // 유효성 검사에 대한 모달
+    const [validateResultModal,setValidateResultModal] = useState(false);
+    const showValidateResultModal = () => {
+        setValidateResultModal(true);
+    }
+    const showValidateResultModalOk = () => {
+        setValidateResultModal(false);
+      };
+
+
+    //입력 값 유효성 검사
+    const handleInputValidate = () => {
+        const data = inputValidator.validate({
+            category:category,
+            content:content,
+            clientName:clientName,
+            shipToName,shipToName
+        });
+
+        if (data.error === undefined) {
+            showValidateResultModal();
+        } else {
+            alert(data.error.message);
+            //console.error(data.error.details[0].message);
+        }
+    }
 
     // ID 존재 여부
     const requsetInfo =(id) => {
@@ -262,7 +341,7 @@ const ModalContext = ({ parentFunction })=>{
                     <span className='font-bold'>Sold To Name</span>
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center'>
-                    <Input id='category' placeholder="Sold To Name을 입력하세요." className='w-96' value={category} onChange={changeCategory} />
+                    <Input id='category' placeholder="Category를 입력하세요." className='w-96' value={category} onChange={changeCategory} />
                 </Col>
             </Row>
 
@@ -277,7 +356,7 @@ const ModalContext = ({ parentFunction })=>{
                     <span className='font-bold'>Bill To Name</span>
                 </Col>
                 <Col span={9} className='h-16 flex items-center justify-center'>
-                    <Input id='content' placeholder="Bill To Name을 입력하세요." className='w-96' value={content} onChange={changeContent}/>
+                    <Input id='content' placeholder="Content를 입력하세요." className='w-96' value={content} onChange={changeContent}/>
                 </Col>
             </Row>
 
@@ -455,7 +534,22 @@ const ModalContext = ({ parentFunction })=>{
                 <Button  onClick={insertInfo} id='insertBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>신규 저장</Button>
                 <Button  onClick={selectInfo} id='selectBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>내용 호출</Button>
                 <Button  onClick={updateContentStore} id='selectBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>Recoil 저장</Button>
+                <Button  onClick={handleInputValidate} id='selectBtn' className='ml-2 rounded-full bg-indigo-500 text-white'>유효성 검사</Button>
+
             </div>
+            
+            <Modal title="유효성 검사 통과" 
+                open={validateResultModal} 
+                onOk={showValidateResultModalOk}
+                okButtonProps={{id:'validateOkBtn'}}
+                cancelButtonProps={{ style: { display: 'none' } }} >
+                
+                <hr/><br/>
+                <p>ClientName : <span className='font-bold'>{clientName}</span></p>
+                <p>Category : <span className='font-bold'>{category}</span></p>
+                <p>shipToName : <span className='font-bold'>{shipToName}</span></p>
+                <p>Content : <span className='font-bold'>{content}</span></p>
+            </Modal>
             
         </div>
     )
